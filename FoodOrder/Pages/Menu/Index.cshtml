@@ -1,0 +1,79 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/contacts.css">
+
+<div class='liveExample'> 
+    
+    <h2>Contacts</h2>
+    <div id='contactsList'>
+        <table class='contactsEditor'>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Ingredients</th>
+                <th>Rating</th>
+                <th></th>
+            </tr>
+            <tbody data-bind="foreach: products">
+                <tr>
+                    <td>
+                        <img width="100px" data-bind="attr:{src: imageUrl}" /> 
+                    </td>
+                    <td>
+                        <span class="form-control" data-bind='text: name'></span>
+                    </td>
+                     <td>
+                        <span class="form-control" data-bind='text: ingredients'></span>
+                    </td>
+                     <td>
+                        <span class="form-control" data-bind='text: rating'></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" data-bind='click: $root.addToCart, text: formatPrice(displayPrice())'></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+</div>
+
+<table>
+            <tr>
+                <th>Quantity</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tbody data-bind="foreach: cart().lines()">
+                <tr>
+                    <td>
+                        <span class="form-control" data-bind='text: quantity()'></span>
+                    </td>
+                     <td>
+                        <span class="form-control" data-bind='text: product().name'></span>
+                    </td>
+                     <td>
+                        <span class="form-control" data-bind='text: subtotal()'></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" data-bind='click: $root.removeFromCart'>x</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total:</td>
+                    <td>                        
+                        <span class="form-control" data-bind='text: cart().grandTotal()'></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" data-bind='click: $root.save, visible: cart().grandTotal() > 0'>Save</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
